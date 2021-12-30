@@ -6,3 +6,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+build
+coverage
+phpunit.xml
+phpstan.neon
+testbench.yaml

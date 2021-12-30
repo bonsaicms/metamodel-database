@@ -50,7 +50,7 @@ class SchemaManager implements SchemaManagerContract
     function createAttribute(Attribute $attribute): self
     {
         Schema::table($attribute->entity->realTableName, function (Blueprint $table) use ($attribute) {
-            $this->updateColumn($attribute, $table);
+            $this->setColumn($attribute, $table, false);
         });
 
         return $this;
@@ -58,16 +58,8 @@ class SchemaManager implements SchemaManagerContract
 
     function updateAttribute(Attribute $attribute): self
     {
-        // TODO: $ composer require doctrine/dbal
-        // TODO: $ composer require doctrine/dbal:^3.0 (Microsoft SQL Server)
-
         Schema::table($attribute->entity->realTableName, function (Blueprint $table) use ($attribute) {
-            $table->renameColumn(
-                from: $attribute->getOriginal('column'),
-                to:   $attribute->column
-            );
-
-            $this->updateColumn($attribute, $table)->change();
+            $this->setColumn($attribute, $table, true);
         });
 
         return $this;
@@ -82,16 +74,27 @@ class SchemaManager implements SchemaManagerContract
         return $this;
     }
 
-    protected function updateColumn(Attribute $attribute, Blueprint $table): ColumnDefinition
+    protected function setColumn(Attribute $attribute, Blueprint $table, bool $update): ColumnDefinition
     {
-        $column = $table->{$attribute->type}($attribute->column);
+        $column = $table->addColumn(
+            type: $attribute->type,
+            name: $attribute->getOriginal('column') ?: $attribute->column
+        );
 
-        if ($attribute->nullable) {
-            $column->nullable();
-        }
+        $column->nullable($attribute->nullable);
+        $column->default($attribute->default);
+        // TODO
+//        $column->unsigned($attribute->unsigned);
 
-        if ($attribute->default) {
-            $column->default($attribute->default);
+        if ($update) {
+            $column->change();
+
+            if ($attribute->isDirty('column')) {
+                $table->renameColumn(
+                    from: $attribute->getOriginal('column'),
+                    to:   $attribute->column
+                );
+            }
         }
 
         return $column;
@@ -100,7 +103,6 @@ class SchemaManager implements SchemaManagerContract
     /*
      * Relationship
      */
-
 
     function createRelationship(Relationship $relationship): self
     {

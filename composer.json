@@ -17,12 +17,32 @@
     "require": {
         "php": "^8.0",
         "laravel/framework": "^8.0",
-        "bonsaicms/metamodel": "dev-master"
+        "bonsaicms/metamodel": "dev-master",
+        "doctrine/dbal": "^3.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.22",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
             "BonsaiCms\\MetamodelDatabase\\": "src"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BonsaiCms\\MetamodelDatabase\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest coverage"
     },
     "extra": {
         "laravel": {
@@ -32,5 +52,12 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true,
+            "composer/package-versions-deprecated": true
+        }
+    }
 }
