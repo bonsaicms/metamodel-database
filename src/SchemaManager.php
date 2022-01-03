@@ -125,25 +125,19 @@ class SchemaManager implements SchemaManagerContract
         }
 
         if ($relationship->type === 'manyToMany') {
-            Schema::create(
-                table:
-                    config('bonsaicms-metamodel.generatedTablePrefix').
-                    $relationship->pivot_table.
-                    config('bonsaicms-metamodel.generatedTableSuffix'),
-                callback:
-                    function (Blueprint $table) use ($relationship) {
-                        $table->foreignId($relationship->left_foreign_key)
-                            ->constrained($relationship->leftEntity->realTableName)
-                            // TODO
-                            ->cascadeOnUpdate()
-                            ->cascadeOnDelete();
+            Schema::create($relationship->realPivotTableName, function (Blueprint $table) use ($relationship) {
+                $table->foreignId($relationship->left_foreign_key)
+                    ->constrained($relationship->leftEntity->realTableName)
+                    // TODO
+                    ->cascadeOnUpdate()
+                    ->cascadeOnDelete();
 
-                        $table->foreignId($relationship->right_foreign_key)
-                            ->constrained($relationship->rightEntity->realTableName)
-                            // TODO
-                            ->cascadeOnUpdate()
-                            ->cascadeOnDelete();
-                    }
+                $table->foreignId($relationship->right_foreign_key)
+                    ->constrained($relationship->rightEntity->realTableName)
+                    // TODO
+                    ->cascadeOnUpdate()
+                    ->cascadeOnDelete();
+            }
             );
         }
 
@@ -167,11 +161,7 @@ class SchemaManager implements SchemaManagerContract
         }
 
         if ($relationship->type === 'manyToMany') {
-            Schema::drop(
-                config('bonsaicms-metamodel.generatedTablePrefix').
-                $relationship->pivot_table.
-                config('bonsaicms-metamodel.generatedTableSuffix'),
-            );
+            Schema::drop($relationship->realPivotTableName);
         }
 
         return $this;
