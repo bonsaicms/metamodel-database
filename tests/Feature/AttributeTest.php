@@ -19,11 +19,11 @@ it('creates a column when an attribute is created', function () {
             'column' => 'original',
         ]);
 
-    $this->assertDatabaseHas('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseHas('pre_met_attributes_suf_met', [
         'column' => 'original',
     ]);
 
-    expect(Schema::hasColumn('bonsaicms_table', 'original'))->toBeTrue();
+    expect(Schema::hasColumn('pre_gen_table_suf_gen', 'original'))->toBeTrue();
 });
 
 it('drops the column when the attribute is deleted', function () {
@@ -35,11 +35,11 @@ it('drops the column when the attribute is deleted', function () {
         ])
         ->delete();
 
-    $this->assertDatabaseMissing('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseMissing('pre_met_attributes_suf_met', [
         'column' => 'original',
     ]);
 
-    expect(Schema::hasColumn('bonsaicms_table', 'original'))->toBeFalse();
+    expect(Schema::hasColumn('pre_gen_table_suf_gen', 'original'))->toBeFalse();
 });
 
 it('renames the column when the attribute is updated', function () {
@@ -53,15 +53,15 @@ it('renames the column when the attribute is updated', function () {
     $attribute->column = 'new';
     $attribute->save();
 
-    $this->assertDatabaseMissing('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseMissing('pre_met_attributes_suf_met', [
         'column' => 'original',
     ]);
-    $this->assertDatabaseHas('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseHas('pre_met_attributes_suf_met', [
         'column' => 'new',
     ]);
 
-    expect(Schema::hasColumn('bonsaicms_table', 'original'))->toBeFalse();
-    expect(Schema::hasColumn('bonsaicms_table', 'new'))->toBeTrue();
+    expect(Schema::hasColumn('pre_gen_table_suf_gen', 'original'))->toBeFalse();
+    expect(Schema::hasColumn('pre_gen_table_suf_gen', 'new'))->toBeTrue();
 });
 
 it('keeps the column name when the attribute was not saved', function () {
@@ -74,15 +74,15 @@ it('keeps the column name when the attribute was not saved', function () {
 
     $attribute->column = 'new';
 
-    $this->assertDatabaseHas('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseHas('pre_met_attributes_suf_met', [
         'column' => 'original',
     ]);
-    $this->assertDatabaseMissing('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseMissing('pre_met_attributes_suf_met', [
         'column' => 'new',
     ]);
 
-    expect(Schema::hasColumn('bonsaicms_table', 'original'))->toBeTrue();
-    expect(Schema::hasColumn('bonsaicms_table', 'new'))->toBeFalse();
+    expect(Schema::hasColumn('pre_gen_table_suf_gen', 'original'))->toBeTrue();
+    expect(Schema::hasColumn('pre_gen_table_suf_gen', 'new'))->toBeFalse();
 });
 
 it('changes column data type when attribute is updated', function () {
@@ -91,21 +91,21 @@ it('changes column data type when attribute is updated', function () {
         ->create([
             'nullable' => true,
             'column' => 'original',
-            'type' => 'string',
+            'type' => 'integer',
         ]);
 
-    $this->assertDatabaseHas('bonsaicms_metamodel_attributes', [
-        'type' => 'string',
-    ]);
-    expect(DB::getSchemaBuilder()->getColumnType('bonsaicms_table', 'original'))->toBe('string');
-
-    $attribute->type = 'integer';
-    $attribute->save();
-
-    $this->assertDatabaseHas('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseHas('pre_met_attributes_suf_met', [
         'type' => 'integer',
     ]);
-    expect(DB::getSchemaBuilder()->getColumnType('bonsaicms_table', 'original'))->toBe('integer');
+    expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('integer');
+
+    $attribute->type = 'string';
+    $attribute->save();
+
+    $this->assertDatabaseHas('pre_met_attributes_suf_met', [
+        'type' => 'string',
+    ]);
+    expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('string');
 });
 
 it('keeps the column data type when attribute was not saved', function () {
@@ -117,18 +117,18 @@ it('keeps the column data type when attribute was not saved', function () {
             'type' => 'string',
         ]);
 
-    $this->assertDatabaseHas('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseHas('pre_met_attributes_suf_met', [
         'type' => 'string',
     ]);
-    expect(DB::getSchemaBuilder()->getColumnType('bonsaicms_table', 'original'))->toBe('string');
+    expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('string');
 
     $attribute->type = 'integer';
 
-    $this->assertDatabaseHas('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseHas('pre_met_attributes_suf_met', [
         'type' => 'string',
     ]);
-    $this->assertDatabaseMissing('bonsaicms_metamodel_attributes', [
+    $this->assertDatabaseMissing('pre_met_attributes_suf_met', [
         'type' => 'integer',
     ]);
-    expect(DB::getSchemaBuilder()->getColumnType('bonsaicms_table', 'original'))->toBe('string');
+    expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('string');
 });

@@ -76,9 +76,17 @@ class SchemaManager implements SchemaManagerContract
 
     protected function setColumn(Attribute $attribute, Blueprint $table, bool $update): ColumnDefinition
     {
+        $parameters = [];
+
+        // TODO
+        if ($attribute->type === 'string') {
+            $parameters['length'] = 255;
+        }
+
         $column = $table->addColumn(
             type: $attribute->type,
-            name: $attribute->getOriginal('column') ?: $attribute->column
+            name: $attribute->getOriginal('column') ?: $attribute->column,
+            parameters: $parameters,
         );
 
         $column->nullable($attribute->nullable);
@@ -106,8 +114,38 @@ class SchemaManager implements SchemaManagerContract
 
     function createRelationship(Relationship $relationship): self
     {
-        // TODO: Implement createRelationship() method.
-        echo "createRelationship";
+        if ($relationship->type === 'oneToOne' || $relationship->type === 'oneToMany') {
+            Schema::table($relationship->rightEntity->realTableName, function (Blueprint $table) use ($relationship) {
+                $table->foreignId($relationship->right_foreign_key)
+                    ->constrained($relationship->leftEntity->realTableName)
+                    // TODO
+                    ->cascadeOnUpdate()
+                    ->cascadeOnDelete();
+            });
+        }
+
+        if ($relationship->type === 'manyToMany') {
+            Schema::create(
+                table:
+                    config('bonsaicms-metamodel.generatedTablePrefix').
+                    $relationship->pivot_table.
+                    config('bonsaicms-metamodel.generatedTableSuffix'),
+                callback:
+                    function (Blueprint $table) use ($relationship) {
+                        $table->foreignId($relationship->left_foreign_key)
+                            ->constrained($relationship->leftEntity->realTableName)
+                            // TODO
+                            ->cascadeOnUpdate()
+                            ->cascadeOnDelete();
+
+                        $table->foreignId($relationship->right_foreign_key)
+                            ->constrained($relationship->rightEntity->realTableName)
+                            // TODO
+                            ->cascadeOnUpdate()
+                            ->cascadeOnDelete();
+                    }
+            );
+        }
 
         return $this;
     }
@@ -122,8 +160,19 @@ class SchemaManager implements SchemaManagerContract
 
     function deleteRelationship(Relationship $relationship): self
     {
-        // TODO: Implement deleteRelationship() method.
-        echo "deleteRelationship";
+        if ($relationship->type === 'oneToOne' || $relationship->type === 'oneToMany') {
+            Schema::table($relationship->rightEntity->realTableName, function (Blueprint $table) use ($relationship) {
+                $table->dropColumn($relationship->right_foreign_key);
+            });
+        }
+
+        if ($relationship->type === 'manyToMany') {
+            Schema::drop(
+                config('bonsaicms-metamodel.generatedTablePrefix').
+                $relationship->pivot_table.
+                config('bonsaicms-metamodel.generatedTableSuffix'),
+            );
+        }
 
         return $this;
     }

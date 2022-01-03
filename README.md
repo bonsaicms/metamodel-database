@@ -1,4 +1,4 @@
-# Metamodel for Bonsai CMS
+# Metamodel Database for Bonsai CMS
 
 ## Installation
 

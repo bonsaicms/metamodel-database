@@ -9,11 +9,11 @@ it('creates a table when an entity was created', function () {
             'table' => 'some',
         ]);
 
-    $this->assertDatabaseHas('bonsaicms_metamodel_entities', [
+    $this->assertDatabaseHas('pre_met_entities_suf_met', [
         'table' => 'some',
     ]);
 
-    expect(Schema::hasTable('bonsaicms_some'))->toBeTrue();
+    expect(Schema::hasTable('pre_gen_some_suf_gen'))->toBeTrue();
 });
 
 it('deletes the table when the entity was deleted', function () {
@@ -23,7 +23,7 @@ it('deletes the table when the entity was deleted', function () {
         ])
         ->delete();
 
-    $this->assertDatabaseMissing('bonsaicms_metamodel_entities', [
+    $this->assertDatabaseMissing('pre_met_entities_suf_met', [
         'table' => 'some',
     ]);
 
@@ -39,15 +39,15 @@ it('renames the table when the entity was updated', function () {
     $entity->table = 'new';
     $entity->save();
 
-    $this->assertDatabaseMissing('bonsaicms_metamodel_entities', [
+    $this->assertDatabaseMissing('pre_met_entities_suf_met', [
         'table' => 'original',
     ]);
-    $this->assertDatabaseHas('bonsaicms_metamodel_entities', [
+    $this->assertDatabaseHas('pre_met_entities_suf_met', [
         'table' => 'new',
     ]);
 
-    expect(Schema::hasTable('bonsaicms_original'))->toBeFalse();
-    expect(Schema::hasTable('bonsaicms_new'))->toBeTrue();
+    expect(Schema::hasTable('pre_gen_original_suf_gen'))->toBeFalse();
+    expect(Schema::hasTable('pre_gen_new_suf_gen'))->toBeTrue();
 });
 
 it('keeps the table name when the entity was not saved', function () {
@@ -58,13 +58,13 @@ it('keeps the table name when the entity was not saved', function () {
 
     $entity->table = 'new';
 
-    $this->assertDatabaseMissing('bonsaicms_metamodel_entities', [
+    $this->assertDatabaseMissing('pre_met_entities_suf_met', [
         'table' => 'new',
     ]);
-    $this->assertDatabaseHas('bonsaicms_metamodel_entities', [
+    $this->assertDatabaseHas('pre_met_entities_suf_met', [
         'table' => 'original',
     ]);
 
-    expect(Schema::hasTable('bonsaicms_new'))->toBeFalse();
-    expect(Schema::hasTable('bonsaicms_original'))->toBeTrue();
+    expect(Schema::hasTable('pre_gen_new_suf_gen'))->toBeFalse();
+    expect(Schema::hasTable('pre_gen_original_suf_gen'))->toBeTrue();
 });
