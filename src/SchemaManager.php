@@ -118,7 +118,7 @@ class SchemaManager implements SchemaManagerContract
             Schema::table($relationship->rightEntity->realTableName, function (Blueprint $table) use ($relationship) {
                 $table->foreignId($relationship->right_foreign_key)
                     ->constrained($relationship->leftEntity->realTableName)
-                    // TODO
+                    // TODO: automaticky predpokladám, že user chce aby to bolo "cascade", ale to nemusí byť vždy pravda
                     ->cascadeOnUpdate()
                     ->cascadeOnDelete();
             });
@@ -128,17 +128,16 @@ class SchemaManager implements SchemaManagerContract
             Schema::create($relationship->realPivotTableName, function (Blueprint $table) use ($relationship) {
                 $table->foreignId($relationship->left_foreign_key)
                     ->constrained($relationship->leftEntity->realTableName)
-                    // TODO
+                    // TODO: automaticky predpokladám, že user chce aby to bolo "cascade", ale to nemusí byť vždy pravda
                     ->cascadeOnUpdate()
                     ->cascadeOnDelete();
 
                 $table->foreignId($relationship->right_foreign_key)
                     ->constrained($relationship->rightEntity->realTableName)
-                    // TODO
+                    // TODO: automaticky predpokladám, že user chce aby to bolo "cascade", ale to nemusí byť vždy pravda
                     ->cascadeOnUpdate()
                     ->cascadeOnDelete();
-            }
-            );
+            });
         }
 
         return $this;
@@ -148,6 +147,7 @@ class SchemaManager implements SchemaManagerContract
     {
         // TODO: Implement updateRelationship() method.
         echo "updateRelationship";
+        throw new \Exception('Not implemented yet');
 
         return $this;
     }

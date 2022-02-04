@@ -21,10 +21,13 @@ class MetamodelDatabaseServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Merge config
         $this->mergeConfigFrom(
-            __DIR__.'/../config/bonsaicms-metamodel-database.php', 'bonsaicms-metamodel-database'
+            __DIR__.'/../config/bonsaicms-metamodel-database.php',
+            'bonsaicms-metamodel-database'
         );
 
+        // Bind implementation
         if (Config::get('bonsaicms-metamodel-database.bind.schemaManager')) {
             $this->app->singleton(SchemaManagerContract::class, SchemaManager::class);
         }
@@ -37,10 +40,12 @@ class MetamodelDatabaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Publish config
         $this->publishes([
             __DIR__.'/../config/bonsaicms-metamodel-database.php' => $this->app->configPath('bonsaicms-metamodel-database.php'),
         ], 'bonsaicms-metamodel-database-config');
 
+        // Observe models
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity')) {
             Entity::observe(EntityObserver::class);
         }
