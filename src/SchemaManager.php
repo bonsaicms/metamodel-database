@@ -114,7 +114,7 @@ class SchemaManager implements SchemaManagerContract
 
     function createRelationship(Relationship $relationship): self
     {
-        if ($relationship->type === 'oneToOne' || $relationship->type === 'oneToMany') {
+        if ($relationship->cardinality === 'oneToOne' || $relationship->cardinality === 'oneToMany') {
             Schema::table($relationship->rightEntity->realTableName, function (Blueprint $table) use ($relationship) {
                 $table->foreignId($relationship->right_foreign_key)
                     ->constrained($relationship->leftEntity->realTableName)
@@ -124,7 +124,7 @@ class SchemaManager implements SchemaManagerContract
             });
         }
 
-        if ($relationship->type === 'manyToMany') {
+        if ($relationship->cardinality === 'manyToMany') {
             Schema::create($relationship->realPivotTableName, function (Blueprint $table) use ($relationship) {
                 $table->foreignId($relationship->left_foreign_key)
                     ->constrained($relationship->leftEntity->realTableName)
@@ -154,13 +154,13 @@ class SchemaManager implements SchemaManagerContract
 
     function deleteRelationship(Relationship $relationship): self
     {
-        if ($relationship->type === 'oneToOne' || $relationship->type === 'oneToMany') {
+        if ($relationship->cardinality === 'oneToOne' || $relationship->cardinality === 'oneToMany') {
             Schema::table($relationship->rightEntity->realTableName, function (Blueprint $table) use ($relationship) {
                 $table->dropColumn($relationship->right_foreign_key);
             });
         }
 
-        if ($relationship->type === 'manyToMany') {
+        if ($relationship->cardinality === 'manyToMany') {
             Schema::drop($relationship->realPivotTableName);
         }
 

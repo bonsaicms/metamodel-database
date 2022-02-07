@@ -19,7 +19,7 @@ it('creates a pivot table when manyToMany relationship is created', function () 
         ->for($this->entity1, 'leftEntity')
         ->for($this->entity2, 'rightEntity')
         ->create([
-            'type' => 'manyToMany',
+            'cardinality' => 'manyToMany',
             'pivot_table' => 'pivot1',
             'left_foreign_key' => 'entity_1_id',
             'right_foreign_key' => 'entity_2_id',
@@ -37,7 +37,7 @@ it('drops a pivot table when manyToMany relationship is deleted', function () {
         ->for($this->entity1, 'leftEntity')
         ->for($this->entity2, 'rightEntity')
         ->create([
-            'type' => 'manyToMany',
+            'cardinality' => 'manyToMany',
             'pivot_table' => 'pivot1',
             'left_foreign_key' => 'entity_1_id',
             'right_foreign_key' => 'entity_2_id',

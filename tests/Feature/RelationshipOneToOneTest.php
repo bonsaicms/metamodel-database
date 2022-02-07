@@ -19,14 +19,14 @@ it('creates foreign key in the right entity table when oneToOne relationship is 
         ->for($this->entity1, 'leftEntity')
         ->for($this->entity2, 'rightEntity')
         ->create([
-            'type' => 'oneToOne',
+            'cardinality' => 'oneToOne',
             'right_foreign_key' => 'entity_1_id',
             'left_relationship_name' => 'entity2',
             'right_relationship_name' => 'entity1',
         ]);
 
     $this->assertDatabaseHas('pre_met_relationships_suf_met', [
-        'type' => 'oneToOne',
+        'cardinality' => 'oneToOne',
         'right_foreign_key' => 'entity_1_id',
         'left_relationship_name' => 'entity2',
         'right_relationship_name' => 'entity1',
@@ -40,7 +40,7 @@ it('deletes foreign key in the right entity table when oneToOne relationship is 
         ->for($this->entity1, 'leftEntity')
         ->for($this->entity2, 'rightEntity')
         ->create([
-            'type' => 'oneToOne',
+            'cardinality' => 'oneToOne',
             'right_foreign_key' => 'entity_1_id',
             'left_relationship_name' => 'entity2',
             'right_relationship_name' => 'entity1',
@@ -48,7 +48,7 @@ it('deletes foreign key in the right entity table when oneToOne relationship is 
         ->delete();
 
     $this->assertDatabaseMissing('pre_met_relationships_suf_met', [
-        'type' => 'oneToOne',
+        'cardinality' => 'oneToOne',
         'right_foreign_key' => 'entity_1_id',
         'left_relationship_name' => 'entity2',
         'right_relationship_name' => 'entity1',
