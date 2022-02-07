@@ -79,12 +79,12 @@ class SchemaManager implements SchemaManagerContract
         $parameters = [];
 
         // TODO
-        if ($attribute->type === 'string') {
+        if ($attribute->data_type === 'string') {
             $parameters['length'] = 255;
         }
 
         $column = $table->addColumn(
-            type: $attribute->type,
+            type: $attribute->data_type,
             name: $attribute->getOriginal('column') ?: $attribute->column,
             parameters: $parameters,
         );

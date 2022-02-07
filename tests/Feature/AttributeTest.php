@@ -91,19 +91,19 @@ it('changes column data type when attribute is updated', function () {
         ->create([
             'nullable' => true,
             'column' => 'original',
-            'type' => 'integer',
+            'data_type' => 'integer',
         ]);
 
     $this->assertDatabaseHas('pre_met_attributes_suf_met', [
-        'type' => 'integer',
+        'data_type' => 'integer',
     ]);
     expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('integer');
 
-    $attribute->type = 'string';
+    $attribute->data_type = 'string';
     $attribute->save();
 
     $this->assertDatabaseHas('pre_met_attributes_suf_met', [
-        'type' => 'string',
+        'data_type' => 'string',
     ]);
     expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('string');
 });
@@ -114,21 +114,21 @@ it('keeps the column data type when attribute was not saved', function () {
         ->create([
             'nullable' => true,
             'column' => 'original',
-            'type' => 'string',
+            'data_type' => 'string',
         ]);
 
     $this->assertDatabaseHas('pre_met_attributes_suf_met', [
-        'type' => 'string',
+        'data_type' => 'string',
     ]);
     expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('string');
 
-    $attribute->type = 'integer';
+    $attribute->data_type = 'integer';
 
     $this->assertDatabaseHas('pre_met_attributes_suf_met', [
-        'type' => 'string',
+        'data_type' => 'string',
     ]);
     $this->assertDatabaseMissing('pre_met_attributes_suf_met', [
-        'type' => 'integer',
+        'data_type' => 'integer',
     ]);
     expect(DB::getSchemaBuilder()->getColumnType('pre_gen_table_suf_gen', 'original'))->toBe('string');
 });
