@@ -4,12 +4,12 @@ namespace BonsaiCms\MetamodelDatabase\Observers;
 
 use Illuminate\Support\Facades\Config;
 use BonsaiCms\Metamodel\Models\Relationship;
-use BonsaiCms\MetamodelDatabase\Contracts\SchemaManagerContract;
+use BonsaiCms\MetamodelDatabase\Contracts\DatabaseManagerContract;
 
 class RelationshipObserver
 {
     public function __construct(
-        protected SchemaManagerContract $manager
+        protected DatabaseManagerContract $manager
     ) {}
 
     /**

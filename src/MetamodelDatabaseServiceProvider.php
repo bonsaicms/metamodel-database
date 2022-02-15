@@ -10,7 +10,7 @@ use BonsaiCms\Metamodel\Models\Relationship;
 use BonsaiCms\MetamodelDatabase\Observers\EntityObserver;
 use BonsaiCms\MetamodelDatabase\Observers\AttributeObserver;
 use BonsaiCms\MetamodelDatabase\Observers\RelationshipObserver;
-use BonsaiCms\MetamodelDatabase\Contracts\SchemaManagerContract;
+use BonsaiCms\MetamodelDatabase\Contracts\DatabaseManagerContract;
 
 class MetamodelDatabaseServiceProvider extends ServiceProvider
 {
@@ -29,7 +29,7 @@ class MetamodelDatabaseServiceProvider extends ServiceProvider
 
         // Bind implementation
         if (Config::get('bonsaicms-metamodel-database.bind.schemaManager')) {
-            $this->app->singleton(SchemaManagerContract::class, SchemaManager::class);
+            $this->app->singleton(DatabaseManagerContract::class, DatabaseManager::class);
         }
     }
 

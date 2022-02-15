@@ -8,9 +8,9 @@ use Illuminate\Database\Schema\Blueprint;
 use BonsaiCms\Metamodel\Models\Attribute;
 use BonsaiCms\Metamodel\Models\Relationship;
 use Illuminate\Database\Schema\ColumnDefinition;
-use BonsaiCms\MetamodelDatabase\Contracts\SchemaManagerContract;
+use BonsaiCms\MetamodelDatabase\Contracts\DatabaseManagerContract;
 
-class SchemaManager implements SchemaManagerContract
+class DatabaseManager implements DatabaseManagerContract
 {
     /*
      * Entity
