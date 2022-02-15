@@ -1,0 +1,8 @@
+<?php
+
+{{ dependencies }}
+
+return new class extends Migration
+{
+    {{ methods|indentTabs(1)| }}
+};

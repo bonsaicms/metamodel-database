@@ -4,6 +4,17 @@ return [
     'bind' => [
         'schemaManager' => true,
     ],
+    'generate' => [
+        'migration' => [
+            'folder' => database_path('migrations'),
+            'fileSuffix' => '.php',
+            'dependencies' => [
+                \Illuminate\Support\Facades\Schema::class,
+                \Illuminate\Database\Schema\Blueprint::class,
+                \Illuminate\Database\Migrations\Migration::class,
+            ],
+        ],
+    ],
     'observeModels' => [
         'entity' => [
             'enabled' => true,

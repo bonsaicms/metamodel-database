@@ -23,6 +23,10 @@ class EntityObserver
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity.schema.'.__FUNCTION__)) {
             $this->manager->createEntity($entity);
         }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.migration.'.__FUNCTION__)) {
+            $this->manager->regenerateMigration($entity);
+        }
     }
 
     /**
@@ -36,6 +40,10 @@ class EntityObserver
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity.schema.'.__FUNCTION__)) {
             $this->manager->updateEntity($entity);
         }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.migration.'.__FUNCTION__)) {
+            $this->manager->regenerateMigration($entity);
+        }
     }
 
     /**
@@ -48,6 +56,10 @@ class EntityObserver
     {
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity.schema.'.__FUNCTION__)) {
             $this->manager->deleteEntity($entity);
+        }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.migration.'.__FUNCTION__)) {
+            $this->manager->regenerateMigration($entity);
         }
     }
 }

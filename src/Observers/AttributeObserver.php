@@ -23,6 +23,10 @@ class AttributeObserver
         if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.schema.'.__FUNCTION__)) {
             $this->manager->createAttribute($attribute);
         }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.migration.'.__FUNCTION__)) {
+            $this->manager->regenerateMigration($attribute->entity);
+        }
     }
 
     /**
@@ -36,6 +40,10 @@ class AttributeObserver
         if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.schema.'.__FUNCTION__)) {
             $this->manager->updateAttribute($attribute);
         }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.migration.'.__FUNCTION__)) {
+            $this->manager->regenerateMigration($attribute->entity);
+        }
     }
 
     /**
@@ -48,6 +56,10 @@ class AttributeObserver
     {
         if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.schema.'.__FUNCTION__)) {
             $this->manager->deleteAttribute($attribute);
+        }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.migration.'.__FUNCTION__)) {
+            $this->manager->regenerateMigration($attribute->entity);
         }
     }
 }

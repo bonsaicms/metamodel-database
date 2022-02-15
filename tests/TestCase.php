@@ -2,6 +2,7 @@
 
 namespace BonsaiCms\MetamodelDatabase\Tests;
 
+use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -42,5 +43,41 @@ class TestCase extends Orchestra
             'generatedTablePrefix' => 'pre_gen_',
             'generatedTableSuffix' => '_suf_gen',
         ]);
+        config()->set('bonsaicms-metamodel-database.generate.migration', [
+            'folder' => base_path('test-migrations'),
+            'fileSuffix' => '.generated.php',
+            'dependencies' => [
+                \Illuminate\Support\Facades\Schema::class,
+                \Illuminate\Database\Schema\Blueprint::class,
+                \Illuminate\Database\Migrations\Migration::class,
+            ],
+        ]);
+    }
+
+    /**
+     * This method is called before each test.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->deleteGeneratedFiles();
+    }
+
+    /**
+     * This method is called after each test.
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->deleteGeneratedFiles();
+    }
+
+    protected function deleteGeneratedFiles()
+    {
+        File::deleteDirectory(
+            base_path('test-migrations')
+        );
     }
 }

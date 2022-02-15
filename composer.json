@@ -18,6 +18,7 @@
         "php": "^8.0",
         "laravel/framework": "^8.0",
         "bonsaicms/metamodel": "dev-master",
+        "bonsaicms/support": "dev-master",
         "doctrine/dbal": "^3.2"
     },
     "require-dev": {

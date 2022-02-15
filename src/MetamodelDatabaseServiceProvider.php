@@ -45,6 +45,11 @@ class MetamodelDatabaseServiceProvider extends ServiceProvider
             __DIR__.'/../config/bonsaicms-metamodel-database.php' => $this->app->configPath('bonsaicms-metamodel-database.php'),
         ], 'bonsaicms-metamodel-database-config');
 
+        // Publish stubs
+        $this->publishes([
+            __DIR__.'/../resources/stubs/' => $this->app->resourcePath('stubs/bonsaicms/metamodel-database/'),
+        ], 'bonsaicms-metamodel-database-stubs');
+
         // Observe models
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity.enabled')) {
             Entity::observe(EntityObserver::class);
