@@ -5,8 +5,45 @@ return [
         'schemaManager' => true,
     ],
     'observeModels' => [
-        'entity' => true,
-        'attribute' => true,
-        'relationship' => true,
+        'entity' => [
+            'enabled' => true,
+            'schema' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+            'migration' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+        ],
+        'attribute' => [
+            'enabled' => true,
+            'schema' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+            'migration' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+        ],
+        'relationship' => [
+            'enabled' => true,
+            'schema' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+            'migration' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+        ],
     ],
+
 ];

@@ -2,6 +2,7 @@
 
 namespace BonsaiCms\MetamodelDatabase\Observers;
 
+use Illuminate\Support\Facades\Config;
 use BonsaiCms\Metamodel\Models\Relationship;
 use BonsaiCms\MetamodelDatabase\Contracts\SchemaManagerContract;
 
@@ -19,7 +20,9 @@ class RelationshipObserver
      */
     public function created(Relationship $relationship)
     {
-        $this->manager->createRelationship($relationship);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.relationship.schema.'.__FUNCTION__)) {
+            $this->manager->createRelationship($relationship);
+        }
     }
 
     /**
@@ -30,7 +33,9 @@ class RelationshipObserver
      */
     public function updated(Relationship $relationship)
     {
-        $this->manager->updateRelationship($relationship);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.relationship.schema.'.__FUNCTION__)) {
+            $this->manager->updateRelationship($relationship);
+        }
     }
 
     /**
@@ -41,17 +46,8 @@ class RelationshipObserver
      */
     public function deleted(Relationship $relationship)
     {
-        $this->manager->deleteRelationship($relationship);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.relationship.schema.'.__FUNCTION__)) {
+            $this->manager->deleteRelationship($relationship);
+        }
     }
-
-    /**
-     * Handle the Relationship "forceDeleted" event.
-     *
-     * @param  \BonsaiCms\Metamodel\Models\Relationship  $relationship
-     * @return void
-     */
-//    public function forceDeleted(Relationship $relationship)
-//    {
-//        dd("forceDeleted");
-//    }
 }

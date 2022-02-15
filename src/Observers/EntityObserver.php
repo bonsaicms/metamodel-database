@@ -3,6 +3,7 @@
 namespace BonsaiCms\MetamodelDatabase\Observers;
 
 use BonsaiCms\Metamodel\Models\Entity;
+use Illuminate\Support\Facades\Config;
 use BonsaiCms\MetamodelDatabase\Contracts\SchemaManagerContract;
 
 class EntityObserver
@@ -19,7 +20,9 @@ class EntityObserver
      */
     public function created(Entity $entity)
     {
-        $this->manager->createEntity($entity);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.schema.'.__FUNCTION__)) {
+            $this->manager->createEntity($entity);
+        }
     }
 
     /**
@@ -30,7 +33,9 @@ class EntityObserver
      */
     public function updated(Entity $entity)
     {
-        $this->manager->updateEntity($entity);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.schema.'.__FUNCTION__)) {
+            $this->manager->updateEntity($entity);
+        }
     }
 
     /**
@@ -41,17 +46,8 @@ class EntityObserver
      */
     public function deleted(Entity $entity)
     {
-        $this->manager->deleteEntity($entity);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.schema.'.__FUNCTION__)) {
+            $this->manager->deleteEntity($entity);
+        }
     }
-
-    /**
-     * Handle the Entity "forceDeleted" event.
-     *
-     * @param  \BonsaiCms\Metamodel\Models\Entity  $entity
-     * @return void
-     */
-//    public function forceDeleted(Entity $entity)
-//    {
-//        dd("forceDeleted");
-//    }
 }

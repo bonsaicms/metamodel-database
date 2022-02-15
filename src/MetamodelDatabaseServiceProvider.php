@@ -46,15 +46,15 @@ class MetamodelDatabaseServiceProvider extends ServiceProvider
         ], 'bonsaicms-metamodel-database-config');
 
         // Observe models
-        if (Config::get('bonsaicms-metamodel-database.observeModels.entity')) {
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.enabled')) {
             Entity::observe(EntityObserver::class);
         }
 
-        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute')) {
+        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.enabled')) {
             Attribute::observe(AttributeObserver::class);
         }
 
-        if (Config::get('bonsaicms-metamodel-database.observeModels.relationship')) {
+        if (Config::get('bonsaicms-metamodel-database.observeModels.relationship.enabled')) {
             Relationship::observe(RelationshipObserver::class);
         }
     }

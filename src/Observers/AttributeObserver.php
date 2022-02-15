@@ -2,6 +2,7 @@
 
 namespace BonsaiCms\MetamodelDatabase\Observers;
 
+use Illuminate\Support\Facades\Config;
 use BonsaiCms\Metamodel\Models\Attribute;
 use BonsaiCms\MetamodelDatabase\Contracts\SchemaManagerContract;
 
@@ -19,7 +20,9 @@ class AttributeObserver
      */
     public function created(Attribute $attribute)
     {
-        $this->manager->createAttribute($attribute);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.schema.'.__FUNCTION__)) {
+            $this->manager->createAttribute($attribute);
+        }
     }
 
     /**
@@ -30,7 +33,9 @@ class AttributeObserver
      */
     public function updated(Attribute $attribute)
     {
-        $this->manager->updateAttribute($attribute);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.schema.'.__FUNCTION__)) {
+            $this->manager->updateAttribute($attribute);
+        }
     }
 
     /**
@@ -41,17 +46,8 @@ class AttributeObserver
      */
     public function deleted(Attribute $attribute)
     {
-        $this->manager->deleteAttribute($attribute);
+        if (Config::get('bonsaicms-metamodel-database.observeModels.attribute.schema.'.__FUNCTION__)) {
+            $this->manager->deleteAttribute($attribute);
+        }
     }
-
-    /**
-     * Handle the Attribute "forceDeleted" event.
-     *
-     * @param  \BonsaiCms\Metamodel\Models\Attribute  $attribute
-     * @return void
-     */
-//    public function forceDeleted(Attribute $attribute)
-//    {
-//        dd("forceDeleted");
-//    }
 }
