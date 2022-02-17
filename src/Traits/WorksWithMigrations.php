@@ -180,7 +180,7 @@ trait WorksWithMigrations
                 }
 
                 return Stub::make('migration/column', [
-                    'type' => $attribute->data_type,
+                    'type' => $this->resolveColumnDataType($attribute),
                     'column' => $attribute->column,
                     'arguments' => '',
                     'decorators' => $decorators->reduce(

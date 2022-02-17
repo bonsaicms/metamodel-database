@@ -46,7 +46,7 @@ trait WorksWithAttributes
         }
 
         $column = $table->addColumn(
-            type: $attribute->data_type,
+            type: $this->resolveColumnDataType($attribute),
             name: $attribute->getOriginal('column') ?: $attribute->column,
             parameters: $parameters,
         );

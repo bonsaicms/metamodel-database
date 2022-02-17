@@ -36,9 +36,12 @@ return new class extends Migration
             $table->datetime('some_nullable_datetime_attribute')->nullable();
             $table->datetime('some_required_datetime_attribute');
             $table->datetime('some_required_datetime_attribute_with_default')->default('2022-02-01 12:34:56');
-            $table->json('some_nullable_json_attribute')->nullable();
-            $table->json('some_required_json_attribute');
-            $table->json('some_required_json_attribute_with_default')->default('{"integer":123,"bool":true,"array":[1,2,3]}');
+            $table->json('some_nullable_arraylist_attribute')->nullable();
+            $table->json('some_required_arraylist_attribute');
+            $table->json('some_required_arraylist_attribute_with_default')->default('["string",123,true,4.56,{"a":"b","c":[]}]');
+            $table->json('some_nullable_arrayhash_attribute')->nullable();
+            $table->json('some_required_arrayhash_attribute');
+            $table->json('some_required_arrayhash_attribute_with_default')->default('{"integer":123,"bool":true,"array":[1,2,3]}');
             $table->timestamps();
         });
     }

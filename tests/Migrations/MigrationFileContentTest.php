@@ -227,30 +227,59 @@ it('generates a correct migration for an entity with attributes', function () {
         ]);
 
     /*
-     * JSON
+     * ArrayList
      */
 
     Attribute::factory()
         ->for($entity)
         ->create([
-            'column' => 'some_nullable_json_attribute',
-            'data_type' => 'json',
+            'column' => 'some_nullable_arraylist_attribute',
+            'data_type' => 'arraylist',
             'nullable' => true,
         ]);
 
     Attribute::factory()
         ->for($entity)
         ->create([
-            'column' => 'some_required_json_attribute',
-            'data_type' => 'json',
+            'column' => 'some_required_arraylist_attribute',
+            'data_type' => 'arraylist',
             'nullable' => false,
         ]);
 
     Attribute::factory()
         ->for($entity)
         ->create([
-            'column' => 'some_required_json_attribute_with_default',
-            'data_type' => 'json',
+            'column' => 'some_required_arraylist_attribute_with_default',
+            'data_type' => 'arraylist',
+            'nullable' => false,
+            'default' => '["string",123,true,4.56,{"a":"b","c":[]}]',
+        ]);
+
+    /*
+     * ArrayHash
+     */
+
+    Attribute::factory()
+        ->for($entity)
+        ->create([
+            'column' => 'some_nullable_arrayhash_attribute',
+            'data_type' => 'arrayhash',
+            'nullable' => true,
+        ]);
+
+    Attribute::factory()
+        ->for($entity)
+        ->create([
+            'column' => 'some_required_arrayhash_attribute',
+            'data_type' => 'arrayhash',
+            'nullable' => false,
+        ]);
+
+    Attribute::factory()
+        ->for($entity)
+        ->create([
+            'column' => 'some_required_arrayhash_attribute_with_default',
+            'data_type' => 'arrayhash',
             'nullable' => false,
             'default' => '{"integer":123,"bool":true,"array":[1,2,3]}',
         ]);
