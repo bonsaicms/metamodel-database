@@ -14,7 +14,7 @@ it('creates a new migration file when an entity was created', function () {
         base_path('test-migrations/2000_02_01_123456_create_some_testing_table.generated.php')
     );
     expect(
-        app(DatabaseManagerContract::class)->migrationExists($entity)
+        app(DatabaseManagerContract::class)->entityMigrationExists($entity)
     )->toBeFalse();
 
     $entity->save();
@@ -23,7 +23,7 @@ it('creates a new migration file when an entity was created', function () {
         base_path('test-migrations/2000_02_01_123456_create_some_testing_table.generated.php')
     );
     expect(
-        app(DatabaseManagerContract::class)->migrationExists($entity)
+        app(DatabaseManagerContract::class)->entityMigrationExists($entity)
     )->toBeTrue();
 });
 
@@ -38,7 +38,7 @@ it('deletes the migration file when an entity was deleted', function () {
         base_path('test-migrations/2000_02_01_123456_create_some_testing_table.generated.php')
     );
     expect(
-        app(DatabaseManagerContract::class)->migrationExists($entity)
+        app(DatabaseManagerContract::class)->entityMigrationExists($entity)
     )->toBeTrue();
 
     $entity->delete();
@@ -47,6 +47,6 @@ it('deletes the migration file when an entity was deleted', function () {
         base_path('test-migrations/2000_02_01_123456_create_some_testing_table.generated.php')
     );
     expect(
-        app(DatabaseManagerContract::class)->migrationExists($entity)
+        app(DatabaseManagerContract::class)->entityMigrationExists($entity)
     )->toBeFalse();
 });

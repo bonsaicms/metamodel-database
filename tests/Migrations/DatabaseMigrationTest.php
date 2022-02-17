@@ -11,7 +11,7 @@ it('generates a correct migration name', function () {
         ]);
 
     expect(
-        app(DatabaseManagerContract::class)->getMigrationName($entity)
+        app(DatabaseManagerContract::class)->getEntityMigrationName($entity)
     )->toBe('2000_02_01_123456_create_some_testing_table');
 });
 

@@ -5,7 +5,7 @@ namespace BonsaiCms\MetamodelDatabase\Contracts;
 use BonsaiCms\Metamodel\Models\Entity;
 use BonsaiCms\Metamodel\Models\Attribute;
 use BonsaiCms\Metamodel\Models\Relationship;
-use BonsaiCms\MetamodelDatabase\Exceptions\MigrationAlreadyExistsException;
+use BonsaiCms\MetamodelDatabase\Exceptions\EntityMigrationAlreadyExistsException;
 
 interface DatabaseManagerContract
 {
@@ -40,29 +40,29 @@ interface DatabaseManagerContract
     function deleteRelationship(Relationship $relationship): self;
 
     /*
-     * Migration
+     * Entity Migration
      */
 
-    function deleteMigration(Entity $entity, bool $markEntityAsNotMigrated = true): self;
+    function deleteEntityMigration(Entity $entity, bool $markEntityAsNotMigrated = true): self;
 
-    function regenerateMigration(Entity $entity): self;
+    function regenerateEntityMigration(Entity $entity): self;
 
     /**
-     * @throws MigrationAlreadyExistsException
+     * @throws EntityMigrationAlreadyExistsException
      */
-    function generateMigration(Entity $entity, bool $markEntityAsMigrated = true): self;
+    function generateEntityMigration(Entity $entity, bool $markEntityAsMigrated = true): self;
 
-    function migrationExists(Entity $entity): bool;
+    function entityMigrationExists(Entity $entity): bool;
 
-    function getMigrationDirectoryPath(Entity $entity): string;
+    function getEntityMigrationDirectoryPath(Entity $entity): string;
 
-    function getMigrationFilePath(Entity $entity): string;
+    function getEntityMigrationFilePath(Entity $entity): string;
 
-    function getMigrationName(Entity $entity): string;
+    function getEntityMigrationName(Entity $entity): string;
 
-    function getMigrationFileName(Entity $entity): string;
+    function getEntityMigrationFileName(Entity $entity): string;
 
-    function getMigrationContents(Entity $entity): string;
+    function getEntityMigrationContents(Entity $entity): string;
 
     function wasEntityMigrated(Entity $entity): bool;
 

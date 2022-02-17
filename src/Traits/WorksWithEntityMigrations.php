@@ -12,15 +12,15 @@ use BonsaiCms\Metamodel\Models\Attribute;
 use BonsaiCms\Support\PhpDependenciesCollection;
 use BonsaiCms\Support\Stubs\Actions\SkipEmptyLines;
 use BonsaiCms\Support\Stubs\Actions\TrimNewLinesFromTheEnd;
-use BonsaiCms\MetamodelDatabase\Exceptions\MigrationAlreadyExistsException;
+use BonsaiCms\MetamodelDatabase\Exceptions\EntityMigrationAlreadyExistsException;
 
-trait WorksWithMigrations
+trait WorksWithEntityMigrations
 {
-    public function deleteMigration(Entity $entity, bool $markEntityAsNotMigrated = true): self
+    public function deleteEntityMigration(Entity $entity, bool $markEntityAsNotMigrated = true): self
     {
-        if ($this->migrationExists($entity)) {
+        if ($this->entityMigrationExists($entity)) {
             File::delete(
-                $this->getMigrationFilePath($entity)
+                $this->getEntityMigrationFilePath($entity)
             );
 
             if ($markEntityAsNotMigrated) {
@@ -31,35 +31,35 @@ trait WorksWithMigrations
         return $this;
     }
 
-    public function regenerateMigration(Entity $entity): self
+    public function regenerateEntityMigration(Entity $entity): self
     {
         if ($entity->exists) {
             $markEntity = !$this->wasEntityMigrated($entity);
-            $this->deleteMigration($entity, $markEntity);
-            $this->generateMigration($entity, $markEntity);
+            $this->deleteEntityMigration($entity, $markEntity);
+            $this->generateEntityMigration($entity, $markEntity);
         } else {
-            $this->deleteMigration($entity);
+            $this->deleteEntityMigration($entity);
         }
 
         return $this;
     }
 
     /**
-     * @throws MigrationAlreadyExistsException
+     * @throws EntityMigrationAlreadyExistsException
      */
-    public function generateMigration(Entity $entity, bool $markEntityAsMigrated = true): self
+    public function generateEntityMigration(Entity $entity, bool $markEntityAsMigrated = true): self
     {
-        if ($this->migrationExists($entity)) {
-            throw new MigrationAlreadyExistsException($entity);
+        if ($this->entityMigrationExists($entity)) {
+            throw new EntityMigrationAlreadyExistsException($entity);
         }
 
         File::ensureDirectoryExists(
-            $this->getMigrationDirectoryPath($entity)
+            $this->getEntityMigrationDirectoryPath($entity)
         );
 
         File::put(
-            path: $this->getMigrationFilePath($entity),
-            contents: $this->getMigrationContents($entity)
+            path: $this->getEntityMigrationFilePath($entity),
+            contents: $this->getEntityMigrationContents($entity)
         );
 
         if ($markEntityAsMigrated) {
@@ -69,26 +69,26 @@ trait WorksWithMigrations
         return $this;
     }
 
-    public function migrationExists(Entity $entity): bool
+    public function entityMigrationExists(Entity $entity): bool
     {
         return File::exists(
-            $this->getMigrationFilePath($entity)
+            $this->getEntityMigrationFilePath($entity)
         );
     }
 
-    public function getMigrationDirectoryPath(Entity $entity): string
+    public function getEntityMigrationDirectoryPath(Entity $entity): string
     {
         return Config::get('bonsaicms-metamodel-database.generate.migration.folder').'/';
     }
 
-    public function getMigrationFilePath(Entity $entity): string
+    public function getEntityMigrationFilePath(Entity $entity): string
     {
         return
-            $this->getMigrationDirectoryPath($entity).
-            $this->getMigrationFileName($entity);
+            $this->getEntityMigrationDirectoryPath($entity).
+            $this->getEntityMigrationFileName($entity);
     }
 
-    public function getMigrationName(Entity $entity): string
+    public function getEntityMigrationName(Entity $entity): string
     {
         return $this->getMigrationFileNamePrefix($entity).
             '_create_'.
@@ -96,9 +96,9 @@ trait WorksWithMigrations
             '_table';
     }
 
-    public function getMigrationFileName(Entity $entity): string
+    public function getEntityMigrationFileName(Entity $entity): string
     {
-        return $this->getMigrationName($entity).
+        return $this->getEntityMigrationName($entity).
             Config::get('bonsaicms-metamodel-database.generate.migration.fileSuffix');
     }
 
@@ -107,7 +107,7 @@ trait WorksWithMigrations
         return $entity->created_at->format('Y_m_d_His');
     }
 
-    public function getMigrationContents(Entity $entity): string
+    public function getEntityMigrationContents(Entity $entity): string
     {
         return Stub::make('migration/file', [
             'dependencies' => $this->resolveMigrationDependencies($entity),
@@ -195,14 +195,14 @@ trait WorksWithMigrations
     {
         return collect($this->migrationRepository->getRan())
             ->contains(
-                $this->getMigrationName($entity)
+                $this->getEntityMigrationName($entity)
             );
     }
 
     public function markEntityAsMigrated(Entity $entity): self
     {
         $this->migrationRepository->log(
-            $this->getMigrationName($entity),
+            $this->getEntityMigrationName($entity),
             $this->migrationRepository->getNextBatchNumber()
         );
 
@@ -212,7 +212,7 @@ trait WorksWithMigrations
     public function markEntityAsNotMigrated(Entity $entity): self
     {
         $this->migrationRepository->delete((object)[
-            'migration' => $this->getMigrationName($entity)
+            'migration' => $this->getEntityMigrationName($entity)
         ]);
 
         return $this;
