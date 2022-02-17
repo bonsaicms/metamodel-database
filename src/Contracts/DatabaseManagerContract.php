@@ -6,6 +6,7 @@ use BonsaiCms\Metamodel\Models\Entity;
 use BonsaiCms\Metamodel\Models\Attribute;
 use BonsaiCms\Metamodel\Models\Relationship;
 use BonsaiCms\MetamodelDatabase\Exceptions\EntityMigrationAlreadyExistsException;
+use BonsaiCms\MetamodelDatabase\Exceptions\RelationshipMigrationAlreadyExistsException;
 
 interface DatabaseManagerContract
 {
@@ -69,4 +70,35 @@ interface DatabaseManagerContract
     function markEntityAsMigrated(Entity $entity): self;
 
     function markEntityAsNotMigrated(Entity $entity): self;
+
+    /*
+     * Relationship Migration
+     */
+
+    function deleteRelationshipMigration(Relationship $relationship, bool $markRelationshipAsNotMigrated = true): self;
+
+    function regenerateRelationshipMigration(Relationship $relationship): self;
+
+    /**
+     * @throws RelationshipMigrationAlreadyExistsException
+     */
+    function generateRelationshipMigration(Relationship $relationship, bool $markRelationshipAsMigrated = true): self;
+
+    function relationshipMigrationExists(Relationship $relationship): bool;
+
+    function getRelationshipMigrationDirectoryPath(Relationship $relationship): string;
+
+    function getRelationshipMigrationFilePath(Relationship $relationship): string;
+
+    function getRelationshipMigrationName(Relationship $relationship): string;
+
+    function getRelationshipMigrationFileName(Relationship $relationship): string;
+
+    function getRelationshipMigrationContents(Relationship $relationship): string;
+
+    function wasRelationshipMigrated(Relationship $relationship): bool;
+
+    function markRelationshipAsMigrated(Relationship $relationship): self;
+
+    function markRelationshipAsNotMigrated(Relationship $relationship): self;
 }

@@ -1,0 +1,13 @@
+/**
+ * Run the migrations.
+ *
+ * @return void
+ */
+public function up()
+{
+    Schema::table('{{ thisTable }}', function (Blueprint $table) {
+        $table->foreignId('{{ foreignKeyColumn }}')
+            ->constrained('{{ relatedTable }}')
+            ->cascadeOnUpdate()->cascadeOnDelete();
+    });
+}

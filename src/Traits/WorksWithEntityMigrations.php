@@ -78,7 +78,7 @@ trait WorksWithEntityMigrations
 
     public function getEntityMigrationDirectoryPath(Entity $entity): string
     {
-        return Config::get('bonsaicms-metamodel-database.generate.migration.folder').'/';
+        return Config::get('bonsaicms-metamodel-database.generate.migration.entity.folder').'/';
     }
 
     public function getEntityMigrationFilePath(Entity $entity): string
@@ -90,7 +90,7 @@ trait WorksWithEntityMigrations
 
     public function getEntityMigrationName(Entity $entity): string
     {
-        return $this->getMigrationFileNamePrefix($entity).
+        return $this->getEntityMigrationFileNamePrefix($entity).
             '_create_'.
             $entity->table.
             '_table';
@@ -99,38 +99,38 @@ trait WorksWithEntityMigrations
     public function getEntityMigrationFileName(Entity $entity): string
     {
         return $this->getEntityMigrationName($entity).
-            Config::get('bonsaicms-metamodel-database.generate.migration.fileSuffix');
+            Config::get('bonsaicms-metamodel-database.generate.migration.entity.fileSuffix');
     }
 
-    protected function getMigrationFileNamePrefix(Entity $entity): string
+    protected function getEntityMigrationFileNamePrefix(Entity $entity): string
     {
         return $entity->created_at->format('Y_m_d_His');
     }
 
     public function getEntityMigrationContents(Entity $entity): string
     {
-        return Stub::make('migration/file', [
-            'dependencies' => $this->resolveMigrationDependencies($entity),
-            'methods' => $this->resolveMigrationMethods($entity),
+        return Stub::make('migrations/entity/file', [
+            'dependencies' => $this->resolveEntityMigrationDependencies($entity),
+            'methods' => $this->resolveEntityMigrationMethods($entity),
         ]);
     }
 
-    protected function resolveMigrationDependencies(Entity $entity): string
+    protected function resolveEntityMigrationDependencies(Entity $entity): string
     {
         $dependencies = new PhpDependenciesCollection(
-            Config::get('bonsaicms-metamodel-database.generate.migration.dependencies')
+            Config::get('bonsaicms-metamodel-database.generate.migration.entity.dependencies')
         );
 
         return $dependencies->toPhpUsesString('');
     }
 
-    protected function resolveMigrationMethods(Entity $entity): string
+    protected function resolveEntityMigrationMethods(Entity $entity): string
     {
         return app(Pipeline::class)
             ->send(
                 collect([
-                    $this->resolveMigrationMethodUp($entity),
-                    $this->resolveMigrationMethodDown($entity),
+                    $this->resolveEntityMigrationMethodUp($entity),
+                    $this->resolveEntityMigrationMethodDown($entity),
                 ])
                 ->join(PHP_EOL)
             )
@@ -140,24 +140,24 @@ trait WorksWithEntityMigrations
             ->thenReturn();
     }
 
-    protected function resolveMigrationMethodUp(Entity $entity): string
+    protected function resolveEntityMigrationMethodUp(Entity $entity): string
     {
-        return Stub::make('migration/methodUp', [
+        return Stub::make('migrations/entity/methodUp', [
             'table' => $entity->realTableName,
-            'columns' => $this->resolveMigrationColumns($entity),
+            'columns' => $this->resolveEntityMigrationColumns($entity),
         ], [
             SkipEmptyLines::class,
         ]);
     }
 
-    protected function resolveMigrationMethodDown(Entity $entity): string
+    protected function resolveEntityMigrationMethodDown(Entity $entity): string
     {
-        return Stub::make('migration/methodDown', [
+        return Stub::make('migrations/entity/methodDown', [
             'table' => $entity->realTableName,
         ]);
     }
 
-    protected function resolveMigrationColumns(Entity $entity): string
+    protected function resolveEntityMigrationColumns(Entity $entity): string
     {
         return $entity->attributes()
             ->orderBy('id') // TODO
@@ -179,13 +179,13 @@ trait WorksWithEntityMigrations
                     $decorators->push("default({$defaultValue})");
                 }
 
-                return Stub::make('migration/column', [
+                return Stub::make('migrations/entity/column', [
                     'type' => $this->resolveColumnDataType($attribute),
                     'column' => $attribute->column,
                     'arguments' => '',
                     'decorators' => $decorators->reduce(
                         static fn ($carry, $value) => $carry .= '->' . $value
-                    ),
+                    , ''),
                 ]);
             })
             ->join(PHP_EOL);

@@ -10,6 +10,7 @@ use BonsaiCms\MetamodelDatabase\Traits\WorksWithRelationships;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use BonsaiCms\MetamodelDatabase\Traits\WorksWithEntityMigrations;
 use BonsaiCms\MetamodelDatabase\Contracts\DatabaseManagerContract;
+use BonsaiCms\MetamodelDatabase\Traits\WorksWithRelationshipMigrations;
 
 class DatabaseManager implements DatabaseManagerContract
 {
@@ -25,6 +26,7 @@ class DatabaseManager implements DatabaseManagerContract
     use WorksWithAttributes;
     use WorksWithRelationships;
     use WorksWithEntityMigrations;
+    use WorksWithRelationshipMigrations;
 
     protected function resolveColumnDataType(Attribute $attribute): string
     {

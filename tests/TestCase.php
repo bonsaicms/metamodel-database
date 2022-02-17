@@ -44,12 +44,23 @@ class TestCase extends Orchestra
             'generatedTableSuffix' => '_suf_gen',
         ]);
         config()->set('bonsaicms-metamodel-database.generate.migration', [
-            'folder' => base_path('test-migrations'),
-            'fileSuffix' => '.generated.php',
-            'dependencies' => [
-                \Illuminate\Support\Facades\Schema::class,
-                \Illuminate\Database\Schema\Blueprint::class,
-                \Illuminate\Database\Migrations\Migration::class,
+            'entity' => [
+                'folder' => base_path('test-migrations'),
+                'fileSuffix' => '.generated.php',
+                'dependencies' => [
+                    \Illuminate\Support\Facades\Schema::class,
+                    \Illuminate\Database\Schema\Blueprint::class,
+                    \Illuminate\Database\Migrations\Migration::class,
+                ],
+            ],
+            'relationship' => [
+                'folder' => base_path('test-migrations'),
+                'fileSuffix' => '.generated.php',
+                'dependencies' => [
+                    \Illuminate\Support\Facades\Schema::class,
+                    \Illuminate\Database\Schema\Blueprint::class,
+                    \Illuminate\Database\Migrations\Migration::class,
+                ],
             ],
         ]);
     }

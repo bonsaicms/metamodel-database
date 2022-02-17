@@ -1,0 +1,11 @@
+/**
+ * Reverse the migrations.
+ *
+ * @return void
+ */
+public function down()
+{
+    Schema::table('{{ thisTable }}', function (Blueprint $table) {
+        $table->dropColumn('{{ foreignKeyColumn }}');
+    });
+}

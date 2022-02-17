@@ -4,6 +4,7 @@ namespace BonsaiCms\MetamodelDatabase\Observers;
 
 use BonsaiCms\Metamodel\Models\Entity;
 use Illuminate\Support\Facades\Config;
+use BonsaiCms\Metamodel\Models\Relationship;
 use BonsaiCms\MetamodelDatabase\Contracts\DatabaseManagerContract;
 
 class EntityObserver
@@ -59,7 +60,15 @@ class EntityObserver
         }
 
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity.migration.'.__FUNCTION__)) {
-            $this->manager->regenerateEntityMigration($entity);
+            $this->manager->deleteEntityMigration($entity);
+
+            $entity->leftRelationships->each(function (Relationship $relationship) {
+                $this->manager->deleteRelationshipMigration($relationship);
+            });
+
+            $entity->rightRelationships->each(function (Relationship $relationship) {
+                $this->manager->deleteRelationshipMigration($relationship);
+            });
         }
     }
 }

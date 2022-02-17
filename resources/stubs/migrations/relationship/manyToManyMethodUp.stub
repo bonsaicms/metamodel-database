@@ -1,0 +1,25 @@
+/**
+ * Run the migrations.
+ *
+ * @return void
+ */
+public function up()
+{
+    Schema::create('{{ pivotTable }}', function (Blueprint $table) {
+        $table->id();
+        $table->timestamps();
+
+        $table->foreignId('{{ leftForeignKey }}')
+            ->constrained('{{ leftTable }}')
+            ->cascadeOnUpdate()->cascadeOnDelete();
+
+        $table->foreignId('{{ rightForeignKey }}')
+            ->constrained('{{ rightTable }}')
+            ->cascadeOnUpdate()->cascadeOnDelete();
+
+        $table->primary([
+            '{{ leftForeignKey }}',
+            '{{ rightForeignKey }}',
+        ]);
+    });
+}
