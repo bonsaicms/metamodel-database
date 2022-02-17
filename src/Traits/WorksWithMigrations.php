@@ -2,6 +2,7 @@
 
 namespace BonsaiCms\MetamodelDatabase\Traits;
 
+use Illuminate\Support\Str;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\File;
 use BonsaiCms\MetamodelDatabase\Stub;
@@ -162,11 +163,29 @@ trait WorksWithMigrations
             ->orderBy('id') // TODO
             ->get()
             ->map(function (Attribute $attribute) {
+                $decorators = collect();
+
+                if ($attribute->nullable) {
+                    $decorators->push('nullable()');
+                }
+
+                if ($attribute->default !== null) {
+                    $defaultValue = json_encode($attribute->default);
+
+                    if (Str::startsWith($defaultValue, '"')) {
+                        $defaultValue = '\'' . $attribute->default . '\'';
+                    }
+
+                    $decorators->push("default({$defaultValue})");
+                }
+
                 return Stub::make('migration/column', [
                     'type' => $attribute->data_type,
                     'column' => $attribute->column,
                     'arguments' => '',
-                    'decorators' => '',
+                    'decorators' => $decorators->reduce(
+                        static fn ($carry, $value) => $carry .= '->' . $value
+                    ),
                 ]);
             })
             ->join(PHP_EOL);
