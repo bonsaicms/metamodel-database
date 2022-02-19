@@ -32,15 +32,15 @@ it('creates a migration with oneToOne relationship', function () {
         ]);
 
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/blueDog.php',
+        expected: generated_path('migrations/blueDog.php'),
         actual: base_path('test-migrations/2000_01_01_123456_create_blue_dogs_table_name_table.generated.php')
     );
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/redCat.php',
+        expected: generated_path('migrations/redCat.php'),
         actual: base_path('test-migrations/2000_02_01_123456_create_red_cats_table_name_table.generated.php')
     );
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/oneToOneRelationship.php',
+        expected: generated_path('migrations/oneToOneRelationship.php'),
         actual: base_path('test-migrations/2000_03_01_123456_add_blue_dogs_table_name_red_cats_table_name_one_to_one_relationship.generated.php')
     );
 });
@@ -58,15 +58,15 @@ it('creates a migration with oneToMany relationship', function () {
         ]);
 
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/blueDog.php',
+        expected: generated_path('migrations/blueDog.php'),
         actual: base_path('test-migrations/2000_01_01_123456_create_blue_dogs_table_name_table.generated.php')
     );
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/redCat.php',
+        expected: generated_path('migrations/redCat.php'),
         actual: base_path('test-migrations/2000_02_01_123456_create_red_cats_table_name_table.generated.php')
     );
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/oneToManyRelationship.php',
+        expected: generated_path('migrations/oneToManyRelationship.php'),
         actual: base_path('test-migrations/2000_03_01_123456_add_blue_dogs_table_name_red_cats_table_name_one_to_many_relationship.generated.php')
     );
 });
@@ -86,15 +86,15 @@ it('creates a migration with manyToMany relationship', function () {
         ]);
 
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/blueDog.php',
+        expected: generated_path('migrations/blueDog.php'),
         actual: base_path('test-migrations/2000_01_01_123456_create_blue_dogs_table_name_table.generated.php')
     );
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/redCat.php',
+        expected: generated_path('migrations/redCat.php'),
         actual: base_path('test-migrations/2000_02_01_123456_create_red_cats_table_name_table.generated.php')
     );
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/manyToManyRelationship.php',
+        expected: generated_path('migrations/manyToManyRelationship.php'),
         actual: base_path('test-migrations/2000_03_01_123456_add_blue_dogs_table_name_red_cats_table_name_many_to_many_relationship.generated.php')
     );
 });

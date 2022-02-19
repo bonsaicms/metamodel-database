@@ -11,7 +11,7 @@ it('generates a correct migration for an entity without attributes', function ()
         ]);
 
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/basic.php',
+        expected: generated_path('migrations/basic.php'),
         actual: base_path('test-migrations/2000_02_01_123456_create_blue_dogs_table.generated.php')
     );
 });
@@ -285,7 +285,7 @@ it('generates a correct migration for an entity with attributes', function () {
         ]);
 
     $this->assertFileEquals(
-        expected: __DIR__.'/../generated/migrations/withAttributes.php',
+        expected: generated_path('migrations/withAttributes.php'),
         actual: base_path('test-migrations/2000_02_01_123456_create_red_cats_table.generated.php')
     );
 });
