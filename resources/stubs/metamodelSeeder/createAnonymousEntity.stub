@@ -1,0 +1,4 @@
+Entity::create([
+    'name' => '{[ entityName ]}',
+    'table' => '{[ entityTable ]}',
+])

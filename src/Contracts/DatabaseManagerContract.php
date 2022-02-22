@@ -6,6 +6,7 @@ use BonsaiCms\Metamodel\Models\Entity;
 use BonsaiCms\Metamodel\Models\Attribute;
 use BonsaiCms\Metamodel\Models\Relationship;
 use BonsaiCms\MetamodelDatabase\Exceptions\EntityMigrationAlreadyExistsException;
+use BonsaiCms\MetamodelDatabase\Exceptions\MetamodelSeederAlreadyExistsException;
 use BonsaiCms\MetamodelDatabase\Exceptions\RelationshipMigrationAlreadyExistsException;
 
 interface DatabaseManagerContract
@@ -101,4 +102,25 @@ interface DatabaseManagerContract
     function markRelationshipAsMigrated(Relationship $relationship): self;
 
     function markRelationshipAsNotMigrated(Relationship $relationship): self;
+
+    /*
+     * Metamodel Seeder
+     */
+
+    function deleteMetamodelSeeder(): self;
+
+    function regenerateMetamodelSeeder(): self;
+
+    /**
+     * @throws MetamodelSeederAlreadyExistsException
+     */
+    function generateMetamodelSeeder(): self;
+
+    function metamodelSeederExists(): bool;
+
+    function getMetamodelSeederDirectoryPath(): string;
+
+    function getMetamodelSeederFilePath(): string;
+
+    function getMetamodelSeederContents(): string;
 }

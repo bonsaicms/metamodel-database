@@ -1,0 +1,10 @@
+/**
+ * Run the database seeds.
+ *
+ * @return void
+ */
+public function run()
+{
+    {[ entities|indentTabs(1) ]}
+    {[ relationships|indentTabs(1) ]}
+}

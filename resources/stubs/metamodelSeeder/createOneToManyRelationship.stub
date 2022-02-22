@@ -1,0 +1,9 @@
+Relationship::make([
+    'cardinality' => 'oneToMany',
+    'right_foreign_key' => '{[ rightForeignKey ]}',
+    'left_relationship_name' => '{[ leftRelationshipName ]}',
+    'right_relationship_name' => '{[ rightRelationshipName ]}',
+])
+    ->leftEntity()->associate(${[ leftEntityVariable ]})
+    ->rightEntity()->associate(${[ rightEntityVariable ]})
+    ->save();

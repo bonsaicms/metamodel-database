@@ -28,6 +28,10 @@ class EntityObserver
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity.migration.'.__FUNCTION__)) {
             $this->manager->regenerateEntityMigration($entity);
         }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.metamodelSeeder.'.__FUNCTION__)) {
+            $this->manager->regenerateMetamodelSeeder();
+        }
     }
 
     /**
@@ -44,6 +48,10 @@ class EntityObserver
 
         if (Config::get('bonsaicms-metamodel-database.observeModels.entity.migration.'.__FUNCTION__)) {
             $this->manager->regenerateEntityMigration($entity);
+        }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.metamodelSeeder.'.__FUNCTION__)) {
+            $this->manager->regenerateMetamodelSeeder();
         }
     }
 
@@ -69,6 +77,10 @@ class EntityObserver
             $entity->rightRelationships->each(function (Relationship $relationship) {
                 $this->manager->deleteRelationshipMigration($relationship);
             });
+        }
+
+        if (Config::get('bonsaicms-metamodel-database.observeModels.entity.metamodelSeeder.'.__FUNCTION__)) {
+            $this->manager->regenerateMetamodelSeeder();
         }
     }
 }

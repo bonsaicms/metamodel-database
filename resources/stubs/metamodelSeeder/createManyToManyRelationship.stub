@@ -1,0 +1,11 @@
+Relationship::make([
+    'cardinality' => 'manyToMany',
+    'pivot_table' => '{[ pivotTable ]}',
+    'left_foreign_key' => '{[ leftForeignKey ]}',
+    'right_foreign_key' => '{[ rightForeignKey ]}',
+    'left_relationship_name' => '{[ leftRelationshipName ]}',
+    'right_relationship_name' => '{[ rightRelationshipName ]}',
+])
+    ->leftEntity()->associate(${[ leftEntityVariable ]})
+    ->rightEntity()->associate(${[ rightEntityVariable ]})
+    ->save();

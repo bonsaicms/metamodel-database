@@ -1,0 +1,7 @@
+[
+    'name' => '{[ name ]}',
+    'column' => '{[ column ]}',
+    'data_type' => '{[ dataType ]}',
+    'default' => {[ default ]},
+    'nullable' => {[ nullable ]},
+],

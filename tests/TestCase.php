@@ -43,23 +43,36 @@ class TestCase extends Orchestra
             'generatedTablePrefix' => 'pre_gen_',
             'generatedTableSuffix' => '_suf_gen',
         ]);
-        config()->set('bonsaicms-metamodel-database.generate.migration', [
-            'entity' => [
-                'folder' => base_path('test-migrations'),
-                'fileSuffix' => '.generated.php',
-                'dependencies' => [
-                    \Illuminate\Support\Facades\Schema::class,
-                    \Illuminate\Database\Schema\Blueprint::class,
-                    \Illuminate\Database\Migrations\Migration::class,
+        config()->set('bonsaicms-metamodel-database.generate', [
+            'migration' => [
+                'entity' => [
+                    'folder' => base_path('test-migrations'),
+                    'fileSuffix' => '.generated.php',
+                    'dependencies' => [
+                        \Illuminate\Support\Facades\Schema::class,
+                        \Illuminate\Database\Schema\Blueprint::class,
+                        \Illuminate\Database\Migrations\Migration::class,
+                    ],
+                ],
+                'relationship' => [
+                    'folder' => base_path('test-migrations'),
+                    'fileSuffix' => '.generated.php',
+                    'dependencies' => [
+                        \Illuminate\Support\Facades\Schema::class,
+                        \Illuminate\Database\Schema\Blueprint::class,
+                        \Illuminate\Database\Migrations\Migration::class,
+                    ],
                 ],
             ],
-            'relationship' => [
-                'folder' => base_path('test-migrations'),
+            'metamodelSeeder' => [
+                'folder' => database_path('seeders'),
+                'namespace' => 'TestApp\\Database\\Seeders',
+                'parentClass' => \Something\TestCustomSeeder::class,
+                'seederName' => 'TestMetamodelSeederCustomName',
                 'fileSuffix' => '.generated.php',
                 'dependencies' => [
-                    \Illuminate\Support\Facades\Schema::class,
-                    \Illuminate\Database\Schema\Blueprint::class,
-                    \Illuminate\Database\Migrations\Migration::class,
+                    \Test\Some\Extra\Dependency::class,
+                    \Test\Illuminate\Database\Console\Seeds\WithoutModelEvents::class,
                 ],
             ],
         ]);
@@ -90,5 +103,17 @@ class TestCase extends Orchestra
         File::deleteDirectory(
             base_path('test-migrations')
         );
+
+        $paths = [
+            database_path('seeders/*.generated.php'),
+        ];
+
+        foreach($paths as $path) {
+            foreach (glob($path) as $file) {
+                if(is_file($file)) {
+                    unlink($file);
+                }
+            }
+        }
     }
 }

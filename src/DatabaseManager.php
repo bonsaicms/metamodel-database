@@ -8,6 +8,7 @@ use BonsaiCms\MetamodelDatabase\Traits\WorksWithEntities;
 use BonsaiCms\MetamodelDatabase\Traits\WorksWithAttributes;
 use BonsaiCms\MetamodelDatabase\Traits\WorksWithRelationships;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use BonsaiCms\MetamodelDatabase\Traits\WorksWithMetamodelSeeder;
 use BonsaiCms\MetamodelDatabase\Traits\WorksWithEntityMigrations;
 use BonsaiCms\MetamodelDatabase\Contracts\DatabaseManagerContract;
 use BonsaiCms\MetamodelDatabase\Traits\WorksWithRelationshipMigrations;
@@ -25,6 +26,7 @@ class DatabaseManager implements DatabaseManagerContract
     use WorksWithEntities;
     use WorksWithAttributes;
     use WorksWithRelationships;
+    use WorksWithMetamodelSeeder;
     use WorksWithEntityMigrations;
     use WorksWithRelationshipMigrations;
 

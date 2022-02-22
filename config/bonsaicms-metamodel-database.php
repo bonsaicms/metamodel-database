@@ -25,6 +25,16 @@ return [
                 ],
             ],
         ],
+        'metamodelSeeder' => [
+            'folder' => database_path('seeders'),
+            'namespace' => 'Database\\Seeders',
+            'parentClass' => \Illuminate\Database\Seeder::class,
+            'seederName' => 'MetamodelSeeder',
+            'fileSuffix' => '.php',
+            'dependencies' => [
+                \Illuminate\Database\Console\Seeds\WithoutModelEvents::class,
+            ],
+        ],
     ],
     'observeModels' => [
         'entity' => [
@@ -35,6 +45,11 @@ return [
                 'deleted' => true,
             ],
             'migration' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+            'metamodelSeeder' => [
                 'created' => true,
                 'updated' => true,
                 'deleted' => true,
@@ -52,6 +67,11 @@ return [
                 'updated' => true,
                 'deleted' => true,
             ],
+            'metamodelSeeder' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
         ],
         'relationship' => [
             'enabled' => true,
@@ -61,6 +81,11 @@ return [
                 'deleted' => true,
             ],
             'migration' => [
+                'created' => true,
+                'updated' => true,
+                'deleted' => true,
+            ],
+            'metamodelSeeder' => [
                 'created' => true,
                 'updated' => true,
                 'deleted' => true,

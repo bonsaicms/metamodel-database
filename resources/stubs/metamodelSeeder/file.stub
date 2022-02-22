@@ -1,0 +1,11 @@
+<?php
+
+namespace {[ namespace ]};
+
+{[ dependencies ]}
+
+class {[ className ]} extends {[ parentClass ]}
+{
+    {[ traits|indentTabs(1)| ]}
+    {[ methods|indentTabs(1)| ]}
+}
