@@ -1,1 +1,1 @@
-$table->{{ type }}('{{ column }}'{{ arguments }}){{ decorators }};
+$table->{[ type ]}('{[ column ]}'{[ arguments ]}){[ decorators ]};

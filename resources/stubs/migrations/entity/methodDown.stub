@@ -5,5 +5,5 @@
  */
 public function down()
 {
-    Schema::dropIfExists('{{ table }}');
+    Schema::dropIfExists('{[ table ]}');
 }

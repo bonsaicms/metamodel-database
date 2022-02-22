@@ -5,7 +5,7 @@
  */
 public function down()
 {
-    Schema::table('{{ thisTable }}', function (Blueprint $table) {
-        $table->dropColumn('{{ foreignKeyColumn }}');
+    Schema::table('{[ thisTable ]}', function (Blueprint $table) {
+        $table->dropColumn('{[ foreignKeyColumn ]}');
     });
 }

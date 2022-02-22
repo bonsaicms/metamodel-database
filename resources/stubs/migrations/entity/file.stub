@@ -1,8 +1,8 @@
 <?php
 
-{{ dependencies }}
+{[ dependencies ]}
 
 return new class extends Migration
 {
-    {{ methods|indentTabs(1)| }}
+    {[ methods|indentTabs(1)| ]}
 };
