@@ -28,7 +28,7 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
                 'name' => 'Name',
                 'column' => 'name',
                 'data_type' => 'string',
-                'default' => null,
+                'default' => 'some default name',
                 'nullable' => false,
             ],
             [
@@ -57,6 +57,20 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
                 'data_type' => 'boolean',
                 'default' => null,
                 'nullable' => true,
+            ],
+            [
+                'name' => 'Some required arraylist attribute with default',
+                'column' => 'some_required_arraylist_attribute_with_default',
+                'data_type' => 'arraylist',
+                'default' => '["string",123,true,4.56,{"a":"b","c":[]}]',
+                'nullable' => false,
+            ],
+            [
+                'name' => 'Some required arrayhash attribute with default',
+                'column' => 'some_required_arrayhash_attribute_with_default',
+                'data_type' => 'arrayhash',
+                'default' => '{"integer":123,"bool":true,"array":[1,2,3]}',
+                'nullable' => false,
             ],
         ]);
     }

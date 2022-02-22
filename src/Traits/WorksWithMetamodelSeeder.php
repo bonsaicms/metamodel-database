@@ -215,15 +215,20 @@ trait WorksWithMetamodelSeeder
             ->send(
                 $entity
                     ->attributes
-                    ->map(static fn (Attribute $attribute)
-                        => Stub::make('metamodelSeeder/attribute', [
+                    ->map(function (Attribute $attribute) {
+                        $jsonEncodedDefault = json_encode($attribute->default);
+                        $default = (str($jsonEncodedDefault)->startsWith('"'))
+                            ? "'" . $attribute->default . "'"
+                            : $jsonEncodedDefault;
+
+                        return Stub::make('metamodelSeeder/attribute', [
                             'name' => $attribute->name,
                             'column' => $attribute->column,
                             'dataType' => $attribute->data_type,
-                            'default' => json_encode($attribute->default), // TODO: escape ?
+                            'default' => $default,
                             'nullable' => $attribute->nullable ? 'true' : 'false',
-                        ])
-                    )
+                        ]);
+                    })
                     ->join(PHP_EOL)
             )
             ->through([
