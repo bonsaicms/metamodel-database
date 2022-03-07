@@ -24,11 +24,6 @@ return new class extends Migration
             $table->foreignId('red_cat_foreign_key_id')
                 ->constrained('pre_gen_red_cats_table_name_suf_gen')
                 ->cascadeOnUpdate()->cascadeOnDelete();
-
-            $table->primary([
-                'blue_dog_foreign_key_id',
-                'red_cat_foreign_key_id',
-            ]);
         });
     }
 

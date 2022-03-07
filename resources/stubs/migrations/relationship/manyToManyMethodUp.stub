@@ -16,10 +16,5 @@ public function up()
         $table->foreignId('{[ rightForeignKey ]}')
             ->constrained('{[ rightTable ]}')
             ->cascadeOnUpdate()->cascadeOnDelete();
-
-        $table->primary([
-            '{[ leftForeignKey ]}',
-            '{[ rightForeignKey ]}',
-        ]);
     });
 }
