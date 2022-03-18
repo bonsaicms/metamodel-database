@@ -2,6 +2,7 @@
 
 namespace BonsaiCms\MetamodelDatabase\Tests;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,6 +21,8 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
+        Carbon::setTestNow('2022-02-22 22:22:22');
+
         config()->set('database.default', 'testing');
         config()->set('database.connections.testing', [
             'driver' => 'pgsql',

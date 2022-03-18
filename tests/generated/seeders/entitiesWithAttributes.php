@@ -23,6 +23,7 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
         Entity::create([
             'name' => 'BlueDog',
             'table' => 'blue_dogs',
+            'created_at' => '2022-02-22 22:22:22',
         ])->attributes()->createMany([
             [
                 'name' => 'Name',
@@ -43,6 +44,7 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
         Entity::create([
             'name' => 'RedCat',
             'table' => 'redCats',
+            'created_at' => '2022-02-22 22:22:22',
         ])->attributes()->createMany([
             [
                 'name' => 'Lives',

@@ -24,6 +24,7 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
         ($author = Entity::create([
             'name' => 'Author',
             'table' => 'authors',
+            'created_at' => '2022-02-22 22:22:22',
         ]))->attributes()->createMany([
             [
                 'name' => 'Name',
@@ -44,6 +45,7 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
         ($profile = Entity::create([
             'name' => 'Profile',
             'table' => 'profiles',
+            'created_at' => '2022-02-22 22:22:22',
         ]))->attributes()->createMany([
             [
                 'name' => 'Address',
@@ -57,6 +59,7 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
         ($article = Entity::create([
             'name' => 'Article',
             'table' => 'articles',
+            'created_at' => '2022-02-22 22:22:22',
         ]))->attributes()->createMany([
             [
                 'name' => 'Title',
@@ -77,6 +80,7 @@ class TestMetamodelSeederCustomName extends TestCustomSeeder
         $tag = Entity::create([
             'name' => 'Tag',
             'table' => 'tags',
+            'created_at' => '2022-02-22 22:22:22',
         ]);
 
         // Relationships

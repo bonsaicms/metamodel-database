@@ -1,4 +1,5 @@
 Entity::create([
     'name' => '{[ entityName ]}',
     'table' => '{[ entityTable ]}',
+    'created_at' => '{[ createdAt ]}',
 ])

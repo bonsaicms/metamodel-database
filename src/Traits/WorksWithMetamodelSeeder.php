@@ -194,6 +194,7 @@ trait WorksWithMetamodelSeeder
             'variable' => str($entity->name)->camel(),
             'entityName' => $entity->name,
             'entityTable' => $entity->table,
+            'createdAt' => $entity->created_at,
         ], [
             TrimNewLinesFromTheEnd::class,
         ]);
